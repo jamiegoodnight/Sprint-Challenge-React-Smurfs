@@ -1,3 +1,19 @@
 .App {
   text-align: center;
 }
+
+.Smurf {
+  background-color: #28b9ee;
+  border: 3px solid black;
+  width: 20%;
+  margin: 0 auto;
+}
+
+.active {
+  color: #28b9ee
+}
+
+img {
+  width: 70px;
+  height: 70xp;
+}

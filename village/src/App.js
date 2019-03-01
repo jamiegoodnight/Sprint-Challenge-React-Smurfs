@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom'
+import {Route, NavLink} from 'react-router-dom'
 import axios from 'axios';
 
 import './App.css';
@@ -32,10 +32,25 @@ class App extends Component {
       })
     )
     .catch(err => {
-      this.setState({
-        error: err
-      })
+      console.log(err);
+      // this.setState({
+      //   error: err
+      // })
     })
+  }
+
+  eaten = (e, id) => { 
+      e.preventDefault();
+      axios
+      .delete(`http://localhost:3333/smurfs/${id}`)
+      .then(res => {
+          this.setState({
+              smurfs: res.data
+          })
+      })
+      .catch(err => {
+          console.log(err);
+      })
   }
 
 
@@ -45,13 +60,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Link to="/smurf-form">
+        <NavLink to="/smurf-form">
           <div className="smurf-form">Grow the Village</div>
-        </Link>
-        <Link to="/">
+        </NavLink>
+        <NavLink exact to="/">
           <div className="See the Village">See the Village</div>
-        </Link>
-        <Route path="/" exact render={props => <Smurfs {...props} smurfs={this.state.smurfs} />} />
+        </NavLink>
+        <Route path="/" exact render={props => <Smurfs {...props} smurfs={this.state.smurfs} eaten={this.eaten} />} />
         <Route path="/smurf-form" render={props => <SmurfForm {...props} fetchSmurfs={this.fetchSmurfs} />} />
 
       </div>
