@@ -33,10 +33,23 @@ class App extends Component {
     )
     .catch(err => {
       console.log(err);
-      // this.setState({
-      //   error: err
-      // })
     })
+  }
+
+  addSmurf = (e, smurf) => {
+    e.preventDefault();
+    // add code to create the smurf using the api
+    axios
+    .post("http://localhost:3333/smurfs", smurf)
+    .then(res => { 
+      this.setState({
+       smurfs: res.data
+      });
+      console.log(res);
+    })
+    .catch(err =>
+      console.log(err)
+    );
   }
 
   eaten = (e, id) => { 
@@ -67,7 +80,7 @@ class App extends Component {
           <div className="See the Village">See the Village</div>
         </NavLink>
         <Route path="/" exact render={props => <Smurfs {...props} smurfs={this.state.smurfs} eaten={this.eaten} />} />
-        <Route path="/smurf-form" render={props => <SmurfForm {...props} fetchSmurfs={this.fetchSmurfs} />} />
+        <Route path="/smurf-form" render={props => <SmurfForm {...props} addSmurf={this.addSmurf}  />} />
 
       </div>
     );
